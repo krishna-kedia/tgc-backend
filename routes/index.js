@@ -144,7 +144,11 @@ router.post("/create-workshop", async (req, res, next) => {
 router.get("/workshops", async (req, res) => {
   try {
     const workshops = await Workshop.find({});
-    res.status(200).json({ message: "all workshops!", done: true, workshops });
+    const chapters = await Chapter.find({})
+    let stat1 = workshops.length
+    let stat2 = chapters.length
+
+    res.status(200).json({ message: "all workshops!", done: true, workshops, stat1, stat2 });
   } catch (error) {
     console.log(error);
   }
