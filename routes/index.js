@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const cors = require('cors')
 const mongoose = require("mongoose");
 const multer = require("multer");
 const {GoogleSpreadsheet} = require("google-spreadsheet")
@@ -14,7 +15,7 @@ const User = mongoose.model("User");
 
 //create a chapter
 router.post(
-  "/create-chapter",
+  "/create-chapter", cors(),
   //upload.single('image'),
   async (req, res, next) => {
     console.log(req.body);
@@ -39,7 +40,7 @@ router.post(
 );
 
 //get all chapters
-router.get("/api/chapters", async (req, res) => {
+router.get("/chapters", cors(),async (req, res) => {
   try {
     let stat1, stat2, stat3, arr = []
     const chapters = await Chapter.find({});
@@ -59,7 +60,7 @@ router.get("/api/chapters", async (req, res) => {
 });
 
 //get a particular chapter
-router.get("/chapter/:chapterId", async (req, res) => {
+router.get("/chapter/:chapterId", cors(),async (req, res) => {
   try {
     const chapter = await Chapter.findById(req.params.chapterId).populate(
   [
@@ -92,7 +93,7 @@ router.get("/chapter/:chapterId", async (req, res) => {
 });
 
 //create a worksop
-router.post("/create-workshop", async (req, res, next) => {
+router.post("/create-workshop",cors(), async (req, res, next) => {
   console.log(req.body, "hi");
   const {
     workshopName,
@@ -141,7 +142,7 @@ router.post("/create-workshop", async (req, res, next) => {
 });
 
 //get all workshops
-router.get("/workshops", async (req, res) => {
+router.get("/workshops",cors(), async (req, res) => {
   try {
     const workshops = await Workshop.find({});
     const chapters = await Chapter.find({})
@@ -155,7 +156,7 @@ router.get("/workshops", async (req, res) => {
 });
 
 //get a particular workshop
-router.get("/workshop/:workshopId", async (req, res) => {
+router.get("/workshop/:workshopId", cors(),async (req, res) => {
   try {
     const workshop = await Workshop.findById(req.params.workshopId);
     res
@@ -167,7 +168,7 @@ router.get("/workshop/:workshopId", async (req, res) => {
 });
 
 //create a user
-router.post("/create-user", async (req, res) => {
+router.post("/create-user",cors(), async (req, res) => {
   const { name, image, department, designation, chapterId } = req.body;
   try {
     const user = await User.create({
@@ -188,7 +189,7 @@ router.post("/create-user", async (req, res) => {
 });
 
 //get all users
-router.get("/users", async (req, res) => {
+router.get("/users",cors(), async (req, res) => {
   try {
     
     let org = [], 
@@ -250,7 +251,7 @@ router.get("/users", async (req, res) => {
   }
 });
 
-router.post('/chapter-delete', async (req, res) => {
+router.post('/chapter-delete', cors(),async (req, res) => {
   try {
     const chapters = await Chapter.find({})
     // for (const chapter of chapters) {
@@ -265,7 +266,7 @@ router.post('/chapter-delete', async (req, res) => {
   }
 })
 
-router.post("/data", async (req, res) => {
+router.post("/data",cors(), async (req, res) => {
   try {
     const doc = new GoogleSpreadsheet('18XBWjzeytN39_KQaHYz734qK7XcRjagjI-e5BWGd7JI')
     await doc.useServiceAccountAuth({
@@ -310,7 +311,7 @@ router.post("/data", async (req, res) => {
   }
 })
 
-router.post("/data-chapter-team", async (req, res) => {
+router.post("/data-chapter-team",cors(), async (req, res) => {
   try {
     const doc = new GoogleSpreadsheet('1QsqRjVLDbKynXBl2xwqwX3Bt1XryjoQjQNHc-n8d8-o')
     await doc.useServiceAccountAuth({
@@ -348,7 +349,7 @@ router.post("/data-chapter-team", async (req, res) => {
   }
 })
 
-router.post("/data-dept", async (req, res) => {
+router.post("/data-dept",cors(), async (req, res) => {
   try {
     const doc = new GoogleSpreadsheet('1QsqRjVLDbKynXBl2xwqwX3Bt1XryjoQjQNHc-n8d8-o')
     await doc.useServiceAccountAuth({
