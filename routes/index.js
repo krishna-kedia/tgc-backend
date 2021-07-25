@@ -39,7 +39,7 @@ router.post(
 );
 
 //get all chapters
-router.get("/chapters", async (req, res) => {
+router.get("/api/chapters", async (req, res) => {
   try {
     let stat1, stat2, stat3, arr = []
     const chapters = await Chapter.find({});
