@@ -34,7 +34,7 @@ mongoose.connection.on('err', () => {
  
 });
 
-app.use('/', indexRouter);
+app.use('/api', indexRouter);
 app.use('/', usersRouter);
 
 //catch 404 and forward to error handler
