@@ -326,6 +326,9 @@ router.post("/data-chapter-team",cors(), async (req, res) => {
     rows.map(async (row) => {
       //console.log(row._rawData)
       try {
+        const deleteUser = await User.deleteMany({
+          dept: false
+        })
         const user = await User.create({
           name: row._rawData[1],
           image: row._rawData[4],
@@ -364,6 +367,9 @@ router.post("/data-dept",cors(), async (req, res) => {
     rows.map(async (row) => {
       //console.log(row._rawData)
       try {
+        const deleteUsers = await User.deleteMany({
+          dept: true
+        })
         const user = await User.create({
           name: row._rawData[1],
           image: row._rawData[4],
@@ -371,11 +377,6 @@ router.post("/data-dept",cors(), async (req, res) => {
           designation: row._rawData[2],
           dept: true
         });
-        // const id = row._rawData[21].toString()
-        // const chapter = await Chapter.findById(id);
-        // // console.log(chapter)
-        // chapter.workshops.push(workshop._id);
-        // await chapter.save();
         console.log(user)
       } catch (error) {
         console.log(error)
